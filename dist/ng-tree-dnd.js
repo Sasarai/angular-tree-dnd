@@ -33,7 +33,7 @@
     'use strict';
     angular.isUndefinedOrNull = isUndefinedOrNull;
 
-    angular.isDefined = isDefined;
+    angular.isDefinedAndNotNull = isDefined;
 
     angular.module('ntt.TreeDnD', ['template/TreeDnD/TreeDnD.html'])
         .constant(
@@ -95,7 +95,21 @@
         }]
 );
 
-angular.module('ntt.TreeDnD')    .directive(    'treeDndNodeHandle', function () {        return {            restrict: 'A',            scope:    true,            link:     function (scope, element, attrs) {                scope.$type = 'TreeDnDNodeHandle';                if (scope.$class.handle) {                    element.addClass(scope.$class.handle);                }            }        };    });
+angular.module('ntt.TreeDnD')
+    .directive(
+    'treeDndNodeHandle', function () {
+        return {
+            restrict: 'A',
+            scope:    true,
+            link:     function (scope, element, attrs) {
+                scope.$type = 'TreeDnDNodeHandle';
+                if (scope.$class.handle) {
+                    element.addClass(scope.$class.handle);
+                }
+            }
+        };
+    }
+);
 
 angular.module('ntt.TreeDnD')
     .directive(
@@ -367,7 +381,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
         };
 
         $scope.onClick = function (node) {
-            if (angular.isDefined($scope.tree) && angular.isFunction($scope.tree.on_click)) {
+            if (angular.isDefinedAndNotNull($scope.tree) && angular.isFunction($scope.tree.on_click)) {
                 // We want to detach from Angular's digest cycle so we can
                 // independently measure the time for one cycle.
                 setTimeout(
@@ -379,7 +393,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
         };
 
         $scope.onSelect = function (node) {
-            if (angular.isDefined($scope.tree)) {
+            if (angular.isDefinedAndNotNull($scope.tree)) {
                 if (node !== $scope.tree.selected_node) {
                     $scope.tree.select_node(node);
                 }
@@ -582,7 +596,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                             if (info.target.$callbacks.accept(info, info.move, info.changed)) {
                                 if (isMove) {
                                     _parent = _parentRemove;
-                                    if (angular.isDefined(_parent.__children__)) {
+                                    if (angular.isDefinedAndNotNull(_parent.__children__)) {
                                         _parent = _parent.__children__;
                                     }
 
@@ -698,7 +712,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                 if (node && node.__index__ > 0) {
                     var _parent, _index = node.__index__ - 1;
 
-                    if (angular.isDefined(node.__parent_real__)) {
+                    if (angular.isDefinedAndNotNull(node.__parent_real__)) {
                         _parent = $scope.tree_nodes[node.__parent_real__];
                         return _parent.__children__[_index];
                     }
@@ -878,7 +892,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                             }
                         }],
                     [
-                        'object', 'treeControl', angular.isDefined($scope.tree) ? $scope.tree : {},
+                        'object', 'treeControl', angular.isDefinedAndNotNull($scope.tree) ? $scope.tree : {},
                         'tree', null, function ($tree) {
 
                         if (!angular.isFunction(_fnGetControl)) {
@@ -903,7 +917,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                     [
                         ['object', 'array'], 'filter', null, 'filter', null, function (filters) {
                         var _passed = false;
-                        if (angular.isDefined(filters) && !angular.isArray(filters)) {
+                        if (angular.isDefinedAndNotNull(filters) && !angular.isArray(filters)) {
                             var _keysF = Object.keys(filters),
                                 _lenF  = _keysF.length, _iF;
 
@@ -1216,7 +1230,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
         function init_data(data) {
 
             // clear memory
-            if (angular.isDefined($scope.tree_nodes)) {
+            if (angular.isDefinedAndNotNull($scope.tree_nodes)) {
                 delete $scope.tree_nodes;
             }
 
@@ -1228,7 +1242,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
             var _data,
                 _len,
                 _tree_nodes = [];
-            if (angular.isDefined(oData)) {
+            if (angular.isDefinedAndNotNull(oData)) {
                 if (!angular.isArray(oData) || oData.length === 0) {
                     return init_data([]);
                 } else {
@@ -1248,7 +1262,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                 getColDefs();
             }
 
-            if (angular.isDefined($scope.orderBy)) {
+            if (angular.isDefinedAndNotNull($scope.orderBy)) {
                 if (!angular.isFunction(_fnInitOrderBy)) {
                     _fnInitOrderBy = $TreeDnDPlugin('$TreeDnDOrderBy');
                 }
@@ -1258,7 +1272,7 @@ function fnInitTreeDnD($timeout, $http, $compile, $parse, $window, $document, $t
                 }
             }
 
-            if (angular.isDefined($scope.filter)) {
+            if (angular.isDefinedAndNotNull($scope.filter)) {
                 if (!angular.isFunction(_fnInitFilter)) {
                     _fnInitFilter = $TreeDnDPlugin('$TreeDnDFilter');
                 }
@@ -1447,7 +1461,7 @@ angular.module('ntt.TreeDnD')
                     _childPassed = false,
                     _filter_index = options.filter_index;
 
-                if (angular.isDefined(node[fieldChild])) {
+                if (angular.isDefinedAndNotNull(node[fieldChild])) {
                     _nodes = node[fieldChild];
                     _len   = _nodes.length;
                     options.filter_index = 0;
@@ -1491,7 +1505,7 @@ angular.module('ntt.TreeDnD')
                     if (typeof callback === 'boolean') {
                         data = !!data;
                         return data === callback;
-                    } else if (angular.isDefined(callback)) {
+                    } else if (angular.isDefinedAndNotNull(callback)) {
                         try {
                             var _regex = new RegExp(callback);
                             return _regex.test(data);
@@ -1535,7 +1549,7 @@ angular.module('ntt.TreeDnD')
                                 return true;
                             }
                         }
-                    } else if (angular.isDefined(node[_key])) {
+                    } else if (angular.isDefinedAndNotNull(node[_key])) {
                         return _fnCheck(_callback, node[_key]);
                     }
                 }
@@ -1734,7 +1748,7 @@ angular.module('ntt.TreeDnD')
                 for_all_descendants = function for_all_descendants(options, node, name, fnOrderBy) {
                     var _i, _len, _nodes;
 
-                    if (angular.isDefined(node[name])) {
+                    if (angular.isDefinedAndNotNull(node[name])) {
                         _nodes = node[name];
                         _len = _nodes.length;
                         // OrderBy children
@@ -1963,7 +1977,7 @@ angular.module('ntt.TreeDnD')
        .factory(
            '$TreeDnDPlugin', ['$injector', function ($injector) {
                var _fnget = function (name) {
-                   if (angular.isDefined($injector) && $injector.has(name)) {
+                   if (angular.isDefinedAndNotNull($injector) && $injector.has(name)) {
                        return $injector.get(name);
                    }
                    return null;
@@ -2599,7 +2613,7 @@ angular.module('ntt.TreeDnD')
                                 var _prev = targetScope.getPrevSibling(_target);
 
                                 _move.parent = _parent;
-                                _move.pos    = angular.isDefined(_prev) ? _prev.__index__ + 1 : 0;
+                                _move.pos    = angular.isDefinedAndNotNull(_prev) ? _prev.__index__ + 1 : 0;
 
                                 _drop = _prev;
                             } else {
