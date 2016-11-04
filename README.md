@@ -1,7 +1,7 @@
 [Angular 1.x] Display treeDnD &amp; event DrapnDrop, field 'td' by tree.
 
 ﻿[![license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/thienhung1989/angular-tree-dnd/blob/master/LICENSE) 
-[![GitHub version](https://badge.fury.io/gh/thienhung1989%2Fangular-tree-dnd.svg)](http://badge.fury.io/gh/thienhung1989%2Fangular-tree-dnd) 
+[![GitHub version](https://badge.fury.io/gh/sasarai%2Fangular-tree-dnd.svg)](http://badge.fury.io/gh/sasarai%2Fangular-tree-dnd) 
 [![Build Status](https://travis-ci.org/thienhung1989/angular-tree-dnd.svg?branch=master)](https://travis-ci.org/thienhung1989/angular-tree-dnd)
 
 ###Support 
